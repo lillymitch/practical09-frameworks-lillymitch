@@ -18,8 +18,64 @@
 
 import ArticleShape from "./ArticleShape";
 import styles from "../styles/Editor.module.css";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
 
 export default function Editor({ currentArticle, complete }) {
-  return <p>Editor</p>;
+  const [title, setTitle] = useState(currentArticle?.title || "");
+  const [contents, setContents] = useState(currentArticle?.contents || "");
+
+  const handleCancel = () => {
+    complete();
+  };
+
+  const handleSave = () => {
+    const timeStamp = new Date().toISOString();
+    const newArticle = {
+      ...currentArticle,
+      id:
+        typeof currentArticle?.id === "number"
+          ? currentArticle.id
+          : String(currentArticle?.id),
+      title,
+      contents,
+      edited: timeStamp,
+    };
+    complete(newArticle);
+  };
+
+  return (
+    <div className={styles.editorContainer}>
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Enter article title"
+        className={styles.titleInput}
+      />
+      <textarea
+        value={contents}
+        onChange={(e) => setContents(e.target.value)}
+        placeholder="Enter article contents"
+        className={styles.contentTextarea}
+      />
+      <div className={styles.buttonContainer}>
+        <button onClick={handleCancel} className={styles.cancelButton}>
+          Cancel
+        </button>
+        <button
+          onClick={handleSave}
+          className={styles.saveButton}
+          disabled={!title.trim()}
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  );
 }
 
+Editor.propTypes = {
+  currentArticle: ArticleShape,
+  complete: PropTypes.func.isRequired,
+};

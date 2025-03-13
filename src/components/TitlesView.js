@@ -8,8 +8,35 @@
     setCurrentArticle - a callback that expects an article as an argument
 
 */
+import PropTypes from "prop-types";
 import ArticleShape from "./ArticleShape";
 
+TitlesView.propTypes = {
+  articles: PropTypes.arrayOf(ArticleShape).isRequired,
+  setCurrentArticle: PropTypes.func.isRequired,
+};
+
 export default function TitlesView({ articles, setCurrentArticle }) {
-  return <ul>Titles go here</ul>;
+  const sortedArticles = [...articles].sort((a, b) =>
+    a.title.localeCompare(b.title),
+  );
+
+  return (
+    <div>
+      <ul>
+        {sortedArticles.map((article) => (
+          <li
+            key={article.id}
+            data-testid="title"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              setCurrentArticle(article);
+            }}
+          >
+            {article.title}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }

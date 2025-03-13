@@ -9,7 +9,29 @@
 
 */
 import styles from "../styles/SectionsView.module.css";
+import PropTypes from "prop-types";
+
+SectionsView.propTypes = {
+  sections: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setCurrentSection: PropTypes.func.isRequired,
+};
 
 export default function SectionsView({ sections, setCurrentSection }) {
-  return <div className={styles.sectionList}>Sections go here</div>;
+  const sortedSections = [...sections].sort();
+
+  return (
+    <div className={styles.sectionList}>
+      <ul>
+        {sortedSections.map((section) => (
+          <li
+            key={section}
+            onClick={() => setCurrentSection(section)}
+            data-testid="section"
+          >
+            {section}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }

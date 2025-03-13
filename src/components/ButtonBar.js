@@ -13,7 +13,34 @@
     handleClick - a function called when a button is clicked (required)
 */
 
-export default function ButtonBar({ allowEdit, handleClick }) {
-  return <div>Buttons</div>;
+import React from "react";
+import PropTypes from "prop-types";
+
+function ButtonBar({ allowEdit, handleClick }) {
+  const handleAddClick = () => handleClick("add");
+  const handleEditClick = () => handleClick("edit");
+
+  return (
+    <div>
+      <button type="button" onClick={handleAddClick} data-testid="add-button">
+        Add
+      </button>
+      {allowEdit && (
+        <button
+          type="button"
+          onClick={handleEditClick}
+          data-testid="edit-button"
+        >
+          Edit
+        </button>
+      )}
+    </div>
+  );
 }
 
+ButtonBar.propTypes = {
+  allowEdit: PropTypes.bool.isRequired,
+  handleClick: PropTypes.func.isRequired,
+};
+
+export default ButtonBar;

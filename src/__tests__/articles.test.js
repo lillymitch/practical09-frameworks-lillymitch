@@ -9,7 +9,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 
 import mockRouter from "next-router-mock";
 import { createDynamicRouteParser } from "next-router-mock/dynamic-routes";
-import Simplepedia from "../pages/articles/[[...id]]";
+import Simplepedia from "../pages";
 
 import articles from "../../data/test-data.json";
 
