@@ -6,7 +6,7 @@ import { createDynamicRouteParser } from "next-router-mock/dynamic-routes";
 import MainApp from "../pages/_app";
 import Simplepedia from "../pages";
 import SimplepediaEditor from "../pages/articles/[id]/edit";
-import SimplepediaCreator from "../pages/edit";
+import SimplepediaCreator from "../pages/articles/edit";
 import articles from "../../data/seed.json";
 
 // Replace the router with the mock

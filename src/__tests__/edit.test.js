@@ -4,7 +4,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import mockRouter from "next-router-mock";
 import { createDynamicRouteParser } from "next-router-mock/dynamic-routes";
 import SimplepediaEditor from "../pages/articles/[id]/edit";
-import SimplepediaCreator from "../pages/edit";
+import SimplepediaCreator from "../pages/articles/edit";
 
 import rawArticles from "../../data/test-data.json";
 
