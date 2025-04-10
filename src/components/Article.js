@@ -16,12 +16,19 @@ export default function Article({ currentArticle }) {
   const formattedDate = new Date(edited).toLocaleString("en-US", {
     hour12: true,
   });
+  // console.log("Rendering Article with:", currentArticle);
+  if (!currentArticle) {
+    return null; // Render nothing if no article is selected
+  }
 
   return (
-    <div className={styles.article}>
-      <h2>{title}</h2>
-      <p>{contents}</p>
-      <p className={styles.timestamp}>{formattedDate}</p>
+    <div>
+      <h1>{title}</h1> {/* Render the title */}
+      <p>{contents}</p> {/* Render the contents */}
+      <p>
+        <strong>Last Edited:</strong> {formattedDate}
+      </p>{" "}
+      {/* Render the formatted date */}
     </div>
   );
 }

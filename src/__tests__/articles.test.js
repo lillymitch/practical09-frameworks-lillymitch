@@ -9,9 +9,8 @@ import { render, screen, fireEvent } from "@testing-library/react";
 
 import mockRouter from "next-router-mock";
 import { createDynamicRouteParser } from "next-router-mock/dynamic-routes";
-import Simplepedia from "../pages";
-
-import articles from "../../data/test-data.json";
+import Simplepedia from "../pages/articles/[[...id]].js";
+import articles from "data/test-data.json";
 
 // Replace the router with the mock
 jest.mock("next/router", () => require("next-router-mock"));

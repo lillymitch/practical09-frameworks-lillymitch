@@ -21,22 +21,20 @@ export default function TitlesView({ articles, setCurrentArticle }) {
     a.title.localeCompare(b.title),
   );
 
+  // console.log("Articles in TitlesView:", articles);
+
   return (
     <div>
-      <ul>
-        {sortedArticles.map((article) => (
-          <li
-            key={article.id}
-            data-testid="title"
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              setCurrentArticle(article);
-            }}
-          >
-            {article.title}
-          </li>
-        ))}
-      </ul>
+      {sortedArticles.map((article) => (
+        <div
+          key={article.id}
+          data-testid="title"
+          onClick={() => setCurrentArticle(article)}
+          style={{ cursor: "pointer" }}
+        >
+          {article.title}
+        </div>
+      ))}
     </div>
   );
 }

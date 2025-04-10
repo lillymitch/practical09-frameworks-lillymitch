@@ -9,7 +9,7 @@
     setCurrentArticle - Function to call set current article displayed
     currentArticle - The article to render
 */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import SectionsView from "./SectionsView";
 import TitlesView from "./TitlesView";
@@ -22,6 +22,16 @@ export default function IndexBar({
 }) {
   const [currentSection, setCurrentSection] = useState(null);
 
+  useEffect(() => {
+    if (currentArticle) {
+      const articleSection = currentArticle.title[0].toUpperCase();
+      // console.log("Article Section:", articleSection); // Debug log
+      if (articleSection !== currentSection) {
+        setCurrentSection(articleSection);
+      }
+    }
+  }, [currentArticle, currentSection]);
+
   if (!Array.isArray(collection)) {
     return <div>Invalid collection data</div>;
   }
@@ -31,34 +41,42 @@ export default function IndexBar({
   ].sort();
 
   const filteredArticles = currentSection
-    ? collection.filter((a) => a.title.startsWith(currentSection))
-    : [];
+    ? collection.filter((a) =>
+        a.title.toUpperCase().startsWith(currentSection.toUpperCase()),
+      )
+    : collection; // Show all articles when no section is selected
+  // console.log("Filtered Articles:", filteredArticles);
 
   const handleSectionClick = (section) => {
     if (section !== currentSection) {
+      // console.log("Setting current section to:", section);
       setCurrentSection(section);
       setCurrentArticle(null);
     }
   };
 
+  const handleTitleClick = (article) => {
+    // console.log("Setting current article to:", article);
+    setCurrentArticle(article);
+  };
+
+  // console.log("Articles in IndexBar:", filteredArticles);
+  // console.log("Current Section in IndexBar:", currentSection);
+  // console.log("Current Article in IndexBar:", currentArticle);
+  // console.log("Filtered Articles in IndexBar:", filteredArticles);
+  // console.log("Current Section in IndexBar:", currentSection);
+  // console.log("SectionsView received sections:", sections);
+  // console.log("Sections in IndexBar:", sections);
   return (
     <div>
-      <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-        {sections.map((section, index) => (
-          <div
-            key={index}
-            data-testid="section"
-            onClick={() => handleSectionClick(section)}
-            style={{ cursor: "pointer" }}
-          >
-            {section}
-          </div>
-        ))}
-      </div>
+      <SectionsView
+        sections={sections}
+        setCurrentSection={handleSectionClick}
+      />
       {currentSection ? (
         <TitlesView
           articles={filteredArticles}
-          setCurrentArticle={setCurrentArticle}
+          setCurrentArticle={handleTitleClick}
         />
       ) : (
         <p style={{ textAlign: "center" }}>Select a section</p>

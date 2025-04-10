@@ -15,21 +15,25 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+import Simplepedia from "@/pages/articles/[[...id]]";
 
-function ButtonBar({ allowEdit, handleClick }) {
-  const handleAddClick = () => handleClick("add");
-  const handleEditClick = () => handleClick("edit");
-
+export default function ButtonBar({ allowEdit, handleClick }) {
   return (
     <div>
-      <button type="button" onClick={handleAddClick} data-testid="add-button">
+      <button
+        type="button"
+        onClick={() => handleClick("add")}
+        data-testid="add-button"
+        aria-label="Add"
+      >
         Add
       </button>
       {allowEdit && (
         <button
           type="button"
-          onClick={handleEditClick}
+          onClick={() => handleClick("edit")}
           data-testid="edit-button"
+          aria-label="Edit"
         >
           Edit
         </button>
@@ -42,5 +46,3 @@ ButtonBar.propTypes = {
   allowEdit: PropTypes.bool.isRequired,
   handleClick: PropTypes.func.isRequired,
 };
-
-export default ButtonBar;

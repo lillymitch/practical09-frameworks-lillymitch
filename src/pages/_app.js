@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import data from "../../data/seed.json";
 import styles from "../styles/Simplepedia.module.css";
 
-function MainApp({ Component, pageProps }) {
+export default function MainApp({ Component, pageProps }) {
   const router = useRouter();
   const { id } = router.query;
 
@@ -23,13 +23,14 @@ function MainApp({ Component, pageProps }) {
     }
   };
 
-  // var = 3 == 5 ? true : false
-
   if (id) {
     let result = collection.find((article) => article.id === +id);
-    // ternary
     currentArticle = result ? result : undefined;
   }
+
+  // console.log("Current Article in _app.js:", currentArticle);
+  // console.log("Router ID:", id);
+  // console.log("Current Article:", currentArticle);
 
   const props = {
     ...pageProps,
@@ -53,8 +54,6 @@ function MainApp({ Component, pageProps }) {
     </div>
   );
 }
-
-export default MainApp;
 
 MainApp.propTypes = {
   Component: PropTypes.elementType.isRequired,

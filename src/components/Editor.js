@@ -25,44 +25,47 @@ export default function Editor({ currentArticle, complete }) {
   const [title, setTitle] = useState(currentArticle?.title || "");
   const [contents, setContents] = useState(currentArticle?.contents || "");
 
+  const handleSave = () => {
+    const updatedArticle = {
+      ...currentArticle,
+      title: title.trim(),
+      contents: contents.trim(),
+      edited: new Date().toISOString(),
+    };
+    complete(updatedArticle);
+  };
   const handleCancel = () => {
     complete();
   };
 
-  const handleSave = () => {
-    const timeStamp = new Date().toISOString();
-    const newArticle = {
-      ...currentArticle,
-      id:
-        typeof currentArticle?.id === "number"
-          ? currentArticle.id
-          : String(currentArticle?.id),
-      title,
-      contents,
-      edited: timeStamp,
-    };
-    complete(newArticle);
-  };
-
   return (
     <div className={styles.editorContainer}>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Enter article title"
-        className={styles.titleInput}
-      />
-      <textarea
-        value={contents}
-        onChange={(e) => setContents(e.target.value)}
-        placeholder="Enter article contents"
-        className={styles.contentTextarea}
-      />
+      <div className={styles.inputContainer}>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title must be set"
+          className={styles.titleInput}
+          aria-label="Article Title"
+        />
+      </div>
+      <div style={{ marginBottom: "1rem" }}></div>{" "}
+      {/* Added space between title and contents */}
+      <div className={styles.textareaContainer}>
+        <textarea
+          value={contents}
+          onChange={(e) => setContents(e.target.value)}
+          placeholder="Contents"
+          className={styles.contentTextarea}
+          aria-label="Article Contents"
+          rows="10" // Increased the number of rows to make the text box larger
+          style={{ width: "100%" }} // Added inline style to make the text box wider
+        />
+      </div>
+      <div style={{ marginBottom: "1rem" }}></div>{" "}
+      {/* Added space between title and contents */}
       <div className={styles.buttonContainer}>
-        <button onClick={handleCancel} className={styles.cancelButton}>
-          Cancel
-        </button>
         <button
           onClick={handleSave}
           className={styles.saveButton}
@@ -70,12 +73,19 @@ export default function Editor({ currentArticle, complete }) {
         >
           Save
         </button>
+        <button onClick={handleCancel} className={styles.cancelButton}>
+          Cancel
+        </button>
       </div>
     </div>
   );
 }
 
 Editor.propTypes = {
-  currentArticle: ArticleShape,
+  currentArticle: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    title: PropTypes.string.isRequired,
+    contents: PropTypes.string.isRequired,
+  }),
   complete: PropTypes.func.isRequired,
 };

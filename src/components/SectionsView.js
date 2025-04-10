@@ -11,27 +11,26 @@
 import styles from "../styles/SectionsView.module.css";
 import PropTypes from "prop-types";
 
-SectionsView.propTypes = {
-  sections: PropTypes.arrayOf(PropTypes.string).isRequired,
-  setCurrentSection: PropTypes.func.isRequired,
-};
-
 export default function SectionsView({ sections, setCurrentSection }) {
   const sortedSections = [...sections].sort();
 
   return (
-    <div className={styles.sectionList}>
-      <ul>
-        {sortedSections.map((section) => (
-          <li
-            key={section}
-            onClick={() => setCurrentSection(section)}
-            data-testid="section"
-          >
-            {section}
-          </li>
-        ))}
-      </ul>
+    <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+      {sortedSections.map((section, index) => (
+        <div
+          key={index}
+          data-testid="section"
+          onClick={() => setCurrentSection(section)}
+          style={{ cursor: "pointer" }}
+        >
+          {section}
+        </div>
+      ))}
     </div>
   );
 }
+
+SectionsView.propTypes = {
+  sections: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setCurrentSection: PropTypes.func.isRequired,
+};

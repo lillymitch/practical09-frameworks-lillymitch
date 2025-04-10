@@ -4,7 +4,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import mockRouter from "next-router-mock";
 import { createDynamicRouteParser } from "next-router-mock/dynamic-routes";
 import SimplepediaEditor from "../pages/articles/[id]/edit";
-import SimplepediaCreator from "../pages/articles/edit";
+import SimplepediaCreator from "../pages/edit";
 
 import rawArticles from "../../data/test-data.json";
 
@@ -44,7 +44,7 @@ describe("SimplepediaEditor: editor page tests", () => {
   });
 
   describe("Simplepedia editing mode tests", () => {
-    test.skip("SimplepediaCreator: No fields have content", () => {
+    test("SimplepediaCreator: No fields have content", () => {
       mockRouter.setCurrentUrl("/edit");
       const { container } = render(
         <SimplepediaCreator
@@ -80,7 +80,7 @@ describe("SimplepediaEditor: editor page tests", () => {
     });
   });
 
-  describe.skip("SimplepediaCreator: Create functionality tests", () => {
+  describe("SimplepediaCreator: Create functionality tests", () => {
     const createNewArticle = () => {
       const { container } = render(
         <SimplepediaCreator
