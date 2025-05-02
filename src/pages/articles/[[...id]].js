@@ -1,13 +1,10 @@
 import PropTypes from "prop-types";
 import IndexBar from "../../components/IndexBar";
-import ArticleShape from "../../components/ArticleShape.js";
 import Article from "../../components/Article";
 import ButtonBar from "../../components/ButtonBar";
 import { useRouter } from "next/router";
-import SimplepediaEditor from "../edit";
 import { useEffect } from "react";
 import { useState } from "react";
-import Editor from "@/components/Editor";
 
 export default function Simplepedia({
   collection: initialCollection,
@@ -43,16 +40,17 @@ export default function Simplepedia({
 
   return (
     <>
-      <IndexBar
-        collection={collection}
-        currentArticle={currentArticle}
-        setCurrentArticle={setCurrentArticle}
-      />
-      {currentArticle && <Article currentArticle={currentArticle} />}
       <ButtonBar
         allowEdit={!!currentArticle} // Show "Edit" button only if an article is selected
         handleClick={handleClick}
       />
+      <IndexBar
+        collection={collection}
+        currentArticle={currentArticle}
+        setCurrentArticle={setCurrentArticle}
+      >
+        {currentArticle && <Article currentArticle={currentArticle} />}
+      </IndexBar>
     </>
   );
 }

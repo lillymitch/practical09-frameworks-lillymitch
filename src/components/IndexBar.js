@@ -14,11 +14,14 @@ import PropTypes from "prop-types";
 import SectionsView from "./SectionsView";
 import TitlesView from "./TitlesView";
 import ArticleShape from "./ArticleShape";
+import Grid from "@mui/material/Grid2";
+import Box from "@mui/material/Box";
 
 export default function IndexBar({
   collection,
   setCurrentArticle,
   currentArticle,
+  children,
 }) {
   const [currentSection, setCurrentSection] = useState(null);
 
@@ -68,20 +71,28 @@ export default function IndexBar({
   // console.log("SectionsView received sections:", sections);
   // console.log("Sections in IndexBar:", sections);
   return (
-    <div>
-      <SectionsView
-        sections={sections}
-        setCurrentSection={handleSectionClick}
-      />
-      {currentSection ? (
-        <TitlesView
-          articles={filteredArticles}
-          setCurrentArticle={handleTitleClick}
-        />
-      ) : (
-        <p style={{ textAlign: "center" }}>Select a section</p>
-      )}
-    </div>
+    <Grid container spacing={2}>
+      <Grid size={12}>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <SectionsView
+            sections={sections}
+            setCurrentSection={handleSectionClick}
+            currentSection={currentSection}
+          />
+        </Box>
+      </Grid>
+      <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        {currentSection ? (
+          <TitlesView
+            articles={filteredArticles}
+            setCurrentArticle={handleTitleClick}
+          />
+        ) : (
+          <p style={{ textAlign: "center" }}>Select a section</p>
+        )}
+      </Grid>
+      <Grid size={{ xs: 12, sm: 6, md: 9 }}>{children}</Grid>
+    </Grid>
   );
 }
 
@@ -89,4 +100,5 @@ IndexBar.propTypes = {
   collection: PropTypes.arrayOf(ArticleShape).isRequired,
   setCurrentArticle: PropTypes.func.isRequired,
   currentArticle: ArticleShape,
+  children: PropTypes.node,
 };

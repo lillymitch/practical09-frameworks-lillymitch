@@ -10,11 +10,17 @@
 */
 import PropTypes from "prop-types";
 import ArticleShape from "./ArticleShape";
+import { styled } from "@mui/material/styles";
 
 TitlesView.propTypes = {
   articles: PropTypes.arrayOf(ArticleShape).isRequired,
   setCurrentArticle: PropTypes.func.isRequired,
 };
+
+const NoBulletList = styled("ul")(() => ({
+  listStyle: "none",
+  paddingLeft: 0,
+}));
 
 export default function TitlesView({ articles, setCurrentArticle }) {
   const sortedArticles = [...articles].sort((a, b) =>
@@ -24,17 +30,17 @@ export default function TitlesView({ articles, setCurrentArticle }) {
   // console.log("Articles in TitlesView:", articles);
 
   return (
-    <div>
+    <NoBulletList>
       {sortedArticles.map((article) => (
-        <div
+        <li
           key={article.id}
           data-testid="title"
           onClick={() => setCurrentArticle(article)}
           style={{ cursor: "pointer" }}
         >
           {article.title}
-        </div>
+        </li>
       ))}
-    </div>
+    </NoBulletList>
   );
 }

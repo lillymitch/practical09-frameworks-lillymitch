@@ -16,29 +16,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Simplepedia from "@/pages/articles/[[...id]]";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 
 export default function ButtonBar({ allowEdit, handleClick }) {
   return (
-    <div>
-      <button
-        type="button"
-        onClick={() => handleClick("add")}
-        data-testid="add-button"
-        aria-label="Add"
-      >
-        Add
-      </button>
-      {allowEdit && (
-        <button
-          type="button"
-          onClick={() => handleClick("edit")}
-          data-testid="edit-button"
-          aria-label="Edit"
-        >
-          Edit
-        </button>
-      )}
-    </div>
+    <ButtonGroup variant="contained" sx={{ my: 2 }}>
+      <Button onClick={() => handleClick("add")}>Add</Button>
+      {allowEdit && <Button onClick={() => handleClick("edit")}>Edit</Button>}
+    </ButtonGroup>
   );
 }
 

@@ -1,5 +1,5 @@
 {
-  "name": "assignment03",
+  "name": "practical-frameworks",
   "version": "0.1.0",
   "private": true,
   "author": "Lilly Mitchell <lhmitchell@middlebury.edu>",
@@ -19,6 +19,12 @@
     "gradescope": "zip -r gradescope.zip setup.sh run_autograder assessment eslint.config.mjs package.json pnpm-lock.yaml"
   },
   "dependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/server": "^11.11.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.0.0",
+    "@mui/material-nextjs": "^6.0.0",
     "module-alias": "^2.2.3",
     "next": "15.1.6",
     "prop-types": "^15.8.1",

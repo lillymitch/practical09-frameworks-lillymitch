@@ -15,11 +15,12 @@
     currentArticle - object with `title` and `contents` properties at minimum
     complete - function to call on completion (required)
 */
-
-import ArticleShape from "./ArticleShape";
 import styles from "../styles/Editor.module.css";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 
 export default function Editor({ currentArticle, complete }) {
   const [title, setTitle] = useState(currentArticle?.title || "");
@@ -41,41 +42,54 @@ export default function Editor({ currentArticle, complete }) {
   return (
     <div className={styles.editorContainer}>
       <div className={styles.inputContainer}>
-        <input
-          type="text"
+        <TextField
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title must be set"
-          className={styles.titleInput}
-          aria-label="Article Title"
+          required
+          fullWidth
+          margin="normal"
+          id="title"
+          label="Title"
+          error={!title}
+          helperText={!title ? "Title can't be blank" : " "}
         />
       </div>
       <div style={{ marginBottom: "1rem" }}></div>{" "}
       {/* Added space between title and contents */}
       <div className={styles.textareaContainer}>
-        <textarea
+        <TextField
           value={contents}
           onChange={(e) => setContents(e.target.value)}
-          placeholder="Contents"
-          className={styles.contentTextarea}
-          aria-label="Article Contents"
-          rows="10" // Increased the number of rows to make the text box larger
-          style={{ width: "100%" }} // Added inline style to make the text box wider
+          fullWidth
+          multiline
+          rows={10}
+          margin="normal"
+          id="contents"
+          label="Contents"
         />
       </div>
       <div style={{ marginBottom: "1rem" }}></div>{" "}
       {/* Added space between title and contents */}
       <div className={styles.buttonContainer}>
-        <button
-          onClick={handleSave}
-          className={styles.saveButton}
-          disabled={!title.trim()}
-        >
-          Save
-        </button>
-        <button onClick={handleCancel} className={styles.cancelButton}>
-          Cancel
-        </button>
+        <Stack direction="row" spacing={2}>
+          <Button
+            onClick={handleSave}
+            variant="contained"
+            color="primary"
+            disabled={!title.trim()}
+            className={styles.saveButton}
+          >
+            Save
+          </Button>
+          <Button
+            onClick={handleCancel}
+            variant="outlined"
+            color="secondary"
+            className={styles.cancelButton}
+          >
+            Cancel
+          </Button>
+        </Stack>
       </div>
     </div>
   );
